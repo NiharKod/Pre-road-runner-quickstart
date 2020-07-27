@@ -33,7 +33,5 @@ public class EarlyTeleOp extends OpMode {
 
         //field centric arcade
         drivetrain.setPowerFieldCentric(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, heading);
-
-
     }
 }
