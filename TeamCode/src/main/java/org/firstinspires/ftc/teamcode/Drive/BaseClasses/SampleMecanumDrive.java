@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.BaseClasses;
+package org.firstinspires.ftc.teamcode.Drive.BaseClasses;
 
 import android.support.annotation.NonNull;
 
@@ -31,22 +31,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.util.DashboardUtil;
-import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.Util.DashboardUtil;
+import org.firstinspires.ftc.teamcode.Util.LynxModuleUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.BASE_CONSTRAINTS;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.getMotorVelocityF;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.BASE_CONSTRAINTS;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.getMotorVelocityF;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kV;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.

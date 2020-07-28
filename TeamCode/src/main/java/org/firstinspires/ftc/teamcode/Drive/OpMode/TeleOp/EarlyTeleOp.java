@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode.drive.OpMode.TeleOp;
+package org.firstinspires.ftc.teamcode.Drive.OpMode.TeleOp;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.drive.BaseClasses.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.Subsystems.Robot;
-import org.firstinspires.ftc.teamcode.drive.Subsystems.SimpleDrivetrain;
+import org.firstinspires.ftc.teamcode.Drive.BaseClasses.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.Drive.Subsystems.Robot;
 
 public class EarlyTeleOp extends OpMode {
 
@@ -19,7 +17,6 @@ public class EarlyTeleOp extends OpMode {
         robot = new Robot(hardwareMap);
         robot.init();
         drive = new SampleMecanumDrive(hardwareMap);
-
     }
 
     @Override
@@ -34,6 +31,5 @@ public class EarlyTeleOp extends OpMode {
 
         //field centric arcade
         robot.drivetrain.setPowerFieldCentric(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, heading);
-
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.OpMode.TestOpModes;
+package org.firstinspires.ftc.teamcode.Drive.OpMode.TestOpModes;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.MovingStatistics;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.drive.BaseClasses.DriveConstants;
-import org.firstinspires.ftc.teamcode.drive.BaseClasses.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants;
+import org.firstinspires.ftc.teamcode.Drive.BaseClasses.SampleMecanumDrive;
 
 /*
  * This routine determines the effective track width. The procedure works by executing a point turn
