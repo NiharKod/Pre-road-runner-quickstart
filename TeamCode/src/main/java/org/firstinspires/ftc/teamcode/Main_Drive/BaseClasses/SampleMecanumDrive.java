@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Drive.BaseClasses;
+package org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses;
 
 import android.support.annotation.NonNull;
 
@@ -9,22 +9,24 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
-import com.acmerobotics.roadrunner.drive.TankDrive;
-import com.acmerobotics.roadrunner.followers.TankPIDVAFollower;
+import com.acmerobotics.roadrunner.drive.MecanumDrive;
+import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.localization.ThreeTrackingWheelLocalizer;
 import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
-import com.acmerobotics.roadrunner.trajectory.constraints.TankConstraints;
+import com.acmerobotics.roadrunner.trajectory.constraints.MecanumConstraints;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
@@ -36,23 +38,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.BASE_CONSTRAINTS;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.getMotorVelocityF;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.Drive.BaseClasses.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.BASE_CONSTRAINTS;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.getMotorVelocityF;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstants.kV;
 
 /*
- * Simple tank drive hardware implementation for REV hardware.
+ * Simple mecanum drive hardware implementation for REV hardware.
  */
 @Config
-public class SampleTankDrive extends TankDrive {
-    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0, 0, 0);
+public class SampleMecanumDrive extends MecanumDrive {
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
 
@@ -73,13 +74,15 @@ public class SampleTankDrive extends TankDrive {
 
     private DriveConstraints constraints;
     private TrajectoryFollower follower;
+    public ThreeTrackingWheelLocalizer myLocalizer;
 
     private List<Pose2d> poseHistory;
 
-    private List<DcMotorEx> motors, leftMotors, rightMotors;
+    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    private List<DcMotorEx> motors;
     private BNO055IMU imu;
 
-    public SampleTankDrive(HardwareMap hardwareMap) {
+    public SampleMecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
 
         dashboard = FtcDashboard.getInstance();
@@ -92,8 +95,8 @@ public class SampleTankDrive extends TankDrive {
         turnController = new PIDFController(HEADING_PID);
         turnController.setInputBounds(0, 2 * Math.PI);
 
-        constraints = new TankConstraints(BASE_CONSTRAINTS, TRACK_WIDTH);
-        follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
+        constraints = new MecanumConstraints(BASE_CONSTRAINTS, TRACK_WIDTH);
+        follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
         poseHistory = new ArrayList<>();
@@ -114,15 +117,12 @@ public class SampleTankDrive extends TankDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        // add/remove motors depending on your robot (e.g., 6WD)
-        DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        DcMotorEx leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        DcMotorEx rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        DcMotorEx rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = hardwareMap.get(DcMotorEx.class, "FL");
+        leftRear = hardwareMap.get(DcMotorEx.class, "BL");
+        rightRear = hardwareMap.get(DcMotorEx.class, "BR");
+        rightFront = hardwareMap.get(DcMotorEx.class, "FR");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
-        leftMotors = Arrays.asList(leftFront, leftRear);
-        rightMotors = Arrays.asList(rightFront, rightRear);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -141,9 +141,13 @@ public class SampleTankDrive extends TankDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
+        myLocalizer = new StandardTrackingWheelLocalizer(hardwareMap);
+        setLocalizer(myLocalizer);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -177,7 +181,6 @@ public class SampleTankDrive extends TankDrive {
     }
 
     public void followTrajectoryAsync(Trajectory trajectory) {
-        poseHistory.clear();
         follower.followTrajectory(trajectory);
         mode = Mode.FOLLOW_TRAJECTORY;
     }
@@ -298,7 +301,7 @@ public class SampleTankDrive extends TankDrive {
     }
 
     public PIDCoefficients getPIDCoefficients(DcMotor.RunMode runMode) {
-        PIDFCoefficients coefficients = leftMotors.get(0).getPIDFCoefficients(runMode);
+        PIDFCoefficients coefficients = leftFront.getPIDFCoefficients(runMode);
         return new PIDCoefficients(coefficients.p, coefficients.i, coefficients.d);
     }
 
@@ -313,35 +316,27 @@ public class SampleTankDrive extends TankDrive {
     @NonNull
     @Override
     public List<Double> getWheelPositions() {
-        double leftSum = 0, rightSum = 0;
-        for (DcMotorEx leftMotor : leftMotors) {
-            leftSum += encoderTicksToInches(leftMotor.getCurrentPosition());
+        List<Double> wheelPositions = new ArrayList<>();
+        for (DcMotorEx motor : motors) {
+            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
         }
-        for (DcMotorEx rightMotor : rightMotors) {
-            rightSum += encoderTicksToInches(rightMotor.getCurrentPosition());
-        }
-        return Arrays.asList(leftSum / leftMotors.size(), rightSum / rightMotors.size());
+        return wheelPositions;
     }
 
     public List<Double> getWheelVelocities() {
-        double leftSum = 0, rightSum = 0;
-        for (DcMotorEx leftMotor : leftMotors) {
-            leftSum += encoderTicksToInches(leftMotor.getVelocity());
+        List<Double> wheelVelocities = new ArrayList<>();
+        for (DcMotorEx motor : motors) {
+            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
         }
-        for (DcMotorEx rightMotor : rightMotors) {
-            rightSum += encoderTicksToInches(rightMotor.getVelocity());
-        }
-        return Arrays.asList(leftSum / leftMotors.size(), rightSum / rightMotors.size());
+        return wheelVelocities;
     }
 
     @Override
-    public void setMotorPowers(double v, double v1) {
-        for (DcMotorEx leftMotor : leftMotors) {
-            leftMotor.setPower(v);
-        }
-        for (DcMotorEx rightMotor : rightMotors) {
-            rightMotor.setPower(v1);
-        }
+    public void setMotorPowers(double v, double v1, double v2, double v3) {
+        leftFront.setPower(v);
+        leftRear.setPower(v1);
+        rightRear.setPower(v2);
+        rightFront.setPower(v3);
     }
 
     @Override
