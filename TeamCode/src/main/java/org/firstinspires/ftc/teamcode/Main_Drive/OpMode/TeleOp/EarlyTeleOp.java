@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Drive.OpMode.TeleOp;
+package org.firstinspires.ftc.teamcode.Main_Drive.OpMode.TeleOp;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.Drive.BaseClasses.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.Drive.Subsystems.Robot;
+import org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.Main_Drive.Subsystems.Robot;
 
 public class EarlyTeleOp extends OpMode {
 
