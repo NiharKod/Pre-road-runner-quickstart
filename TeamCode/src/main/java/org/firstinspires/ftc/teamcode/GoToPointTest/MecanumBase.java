@@ -51,7 +51,7 @@ public class MecanumBase {
 
             leftEncoder = hw.get(DcMotor.class, "leftEncoder");
             rightEncoder = hw.get(DcMotor.class, "rightEncoder");
-            strafeEncoder = hw.get(DcMotor.class, "strafeEncoder");
+            strafeEncoder = hw.get(DcMotor.class, "frontEncoderl");
 
     }
 
