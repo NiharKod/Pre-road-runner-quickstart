@@ -40,18 +40,18 @@ public class MecanumBase {
     }
 
     public void init(){
-        FL = hw.get(DcMotorEx.class, "FL");
-        FR = hw.get(DcMotorEx.class, "FR");
-        BL = hw.get(DcMotorEx.class, "BL");
-        BR = hw.get(DcMotorEx.class, "FR");
+            FL = hw.get(DcMotorEx.class, "FL");
+            FR = hw.get(DcMotorEx.class, "FR");
+            BL = hw.get(DcMotorEx.class, "BL");
+            BR = hw.get(DcMotorEx.class, "FR");
 
-        FL.setDirection(DcMotorSimple.Direction.REVERSE);
-        BL.setDirection(DcMotorSimple.Direction.REVERSE);
+            FL.setDirection(DcMotorSimple.Direction.REVERSE);
+            BL.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        leftEncoder = hw.get(DcMotor.class, "leftEncoder");
-        rightEncoder = hw.get(DcMotor.class, "rightEncoder");
-        strafeEncoder = hw.get(DcMotor.class, "strafeEncoder");
+            leftEncoder = hw.get(DcMotor.class, "leftEncoder");
+            rightEncoder = hw.get(DcMotor.class, "rightEncoder");
+            strafeEncoder = hw.get(DcMotor.class, "strafeEncoder");
 
     }
 

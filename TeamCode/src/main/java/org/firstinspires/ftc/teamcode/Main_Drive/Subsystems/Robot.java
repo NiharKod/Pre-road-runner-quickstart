@@ -7,10 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Robot {
     HardwareMap hw;
-   public  SimpleDrivetrain drivetrain;
+    public  SimpleDrivetrain drivetrain;
     public  SimpleDrivetrain2 drivetrain2;
-
-
 
 
     public Robot(HardwareMap hardwareMap){
