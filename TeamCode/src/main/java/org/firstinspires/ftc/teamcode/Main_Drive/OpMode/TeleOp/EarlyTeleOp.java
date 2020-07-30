@@ -2,10 +2,13 @@ package org.firstinspires.ftc.teamcode.Main_Drive.OpMode.TeleOp;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Main_Drive.Subsystems.Robot;
 
+
+@TeleOp(name="TeleOp1")
 public class EarlyTeleOp extends OpMode {
 
     Robot robot;
