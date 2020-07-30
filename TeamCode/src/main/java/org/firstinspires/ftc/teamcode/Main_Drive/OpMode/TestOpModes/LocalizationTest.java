@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.Main_Drive.OpMode.TestOpModes;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.acmerobotics.dashboard.canvas.Canvas;
 import org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.Util.DashboardUtil;
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -56,6 +57,23 @@ public class LocalizationTest extends LinearOpMode {
             drive.setDrivePower(vel);
 
             drive.update();
+
+            TelemetryPacket packet = new TelemetryPacket();
+
+            Pose2d estimate = drive.getPoseEstimate();
+            packet.put("x", estimate.getX());
+            packet.put("y", estimate.getY());
+            packet.put("heading", Math.toDegrees(estimate.getHeading()));
+            packet.put("imu", Math.toDegrees(drive.getRawExternalHeading()));
+
+            Canvas fieldOverlay = packet.fieldOverlay();
+            fieldOverlay.setStroke("#F44336");
+            DashboardUtil.drawRobot(fieldOverlay, new Pose2d(estimate.getX(), estimate.getY(), estimate.getHeading()));
+
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+
+
 
             Pose2d poseEstimate = drive.getPoseEstimate();
             telemetry.addData("x", poseEstimate.getX());
