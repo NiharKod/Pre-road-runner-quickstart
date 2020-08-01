@@ -17,7 +17,7 @@ public class EarlyTeleOp extends OpMode {
 
     @Override
     public void init() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, telemetry);
         robot.init();
         drive = new SampleMecanumDrive(hardwareMap);
     }
