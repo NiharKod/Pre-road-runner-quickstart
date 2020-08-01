@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Main_Drive.Libs;
+package org.firstinspires.ftc.teamcode.Main_Drive.RobotLibraries;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class StickyGamepad {
