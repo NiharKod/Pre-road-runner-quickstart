@@ -23,12 +23,14 @@ public class DriveConstants {
      */
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
+    private static final double MAX_VELO = 74.493445001921177270426199904324;
+    private static final double PREFFERED_VELO = MAX_VELO * 0.8;
 
     /*
      * Set the first flag appropriately. If using the built-in motor velocity PID, update
      * MOTOR_VELO_PID with the tuned coefficients from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = true;
+    public static final boolean RUN_USING_ENCODER = false;
     public static final PIDCoefficients MOTOR_VELO_PID = null;
 
     /*
@@ -39,9 +41,9 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 1.9685; // in
-    public static double GEAR_RATIO = 0.8750000000000001; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 14.9606; // in
+    public static double WHEEL_RADIUS = (100 / 25.4) / 2; // in
+    public static double GEAR_RATIO = 1.14; // output (wheel) speed / input (motor) speed
+    public static double TRACK_WIDTH = (412 / 26.4); // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -81,7 +83,7 @@ public class DriveConstants {
      * Maximum Angular Velocity is calculated as maximum velocity / (trackWidth / 2) * (180 / Math.PI)
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            45.021159008946185, 45.021159008946185, 0.0,
+            PREFFERED_VELO, PREFFERED_VELO, 0.0,
             Math.toRadians(344.842105263158), Math.toRadians(344.842105263158), 0.0
     );
 
