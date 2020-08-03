@@ -55,7 +55,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 //        rightEncoder = hardwareMap.dcMotor.get("rightEncoder");
 //        frontEncoder = hardwareMap.dcMotor.get("frontEncoder");
 
-        hub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
+        hub = hardwareMap.get(ExpansionHubEx.class, "odoHub");
 
     }
 
