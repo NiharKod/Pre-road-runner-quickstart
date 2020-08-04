@@ -39,9 +39,9 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     private DcMotor leftEncoder, rightEncoder, frontEncoder;
     private ExpansionHubEx hub;
 
-    private int LEFT_TELEMETRY_PORT = 0;
-    private int RIGHT_TELEMETRY_PORT = 1;
-    private int FRONT_TELEMETRY_PORT = 2;
+    private int LEFT_TELEMETRY_PORT = 3;
+    private int RIGHT_TELEMETRY_PORT = 0;
+    private int FRONT_TELEMETRY_PORT = 1;
 
 
     public StandardTrackingWheelLocalizer(HardwareMap hardwareMap) {
