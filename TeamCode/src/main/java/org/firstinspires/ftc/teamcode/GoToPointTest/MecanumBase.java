@@ -49,7 +49,7 @@ public class MecanumBase {
             BL.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-            leftEncoder = hw.get(DcMotor.class, "leftEncoder");
+            leftEncoder = hw.get(DcMotor.class, "FL");
             rightEncoder = hw.get(DcMotor.class, "rightEncoder");
             strafeEncoder = hw.get(DcMotor.class, "frontEncoderl");
 
@@ -104,7 +104,7 @@ public class MecanumBase {
 
     }
     public double getLeftOdo(){
-        double currentTicks = leftEncoder.getCurrentPosition();
+        double currentTicks = FL.getCurrentPosition();
         double inches = (currentTicks * (60 * Math.PI) / 25.4) / 8192;
 
         return inches;
@@ -112,14 +112,14 @@ public class MecanumBase {
     }
 
     public double getRightOdo(){
-        double currentTicks = rightEncoder.getCurrentPosition();
+        double currentTicks = FR.getCurrentPosition();
         double inches = (currentTicks * (60 * Math.PI) / 25.4) / 8192;
 
         return inches;
     }
 
     public double getStrafeOdo(){
-        double currentTicks = strafeEncoder.getCurrentPosition();
+        double currentTicks = BR.getCurrentPosition();
         double inches = (currentTicks * (60 * Math.PI) / 25.4) / 8192;
 
         return inches;
