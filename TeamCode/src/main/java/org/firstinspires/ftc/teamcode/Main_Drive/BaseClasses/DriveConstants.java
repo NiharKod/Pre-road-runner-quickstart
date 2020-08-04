@@ -23,7 +23,7 @@ public class DriveConstants {
      */
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
-    private static final double MAX_VELO = 74.493445001921177270426199904324;
+    private static final double MAX_VELO =  (312 / 60) * (1.14) * ((100 / 25.4) / 2) * (2 * Math.PI);;
     private static final double PREFFERED_VELO = MAX_VELO * 0.8;
 
     /*
