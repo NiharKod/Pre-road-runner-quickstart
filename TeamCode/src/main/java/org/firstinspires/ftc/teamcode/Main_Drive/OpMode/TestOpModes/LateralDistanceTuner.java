@@ -3,6 +3,7 @@ import com.acmerobotics.roadrunner.localization.ThreeTrackingWheelLocalizer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.StandardTrackingWhe
 import org.firstinspires.ftc.teamcode.Main_Drive.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Main_Drive.Subsystems.SimpleDrivetrain;
 //TODO: By turning the robot 180 degrees 11 times (odd number) this will calculate your lateral distance
-@Autonomous(name = "LateralDistanceTuner")
+@TeleOp(name = "LateralDistanceTuner")
 public class LateralDistanceTuner extends LinearOpMode {
     SampleMecanumDrive drive;
     StandardTrackingWheelLocalizer localizer;
@@ -25,7 +26,7 @@ public class LateralDistanceTuner extends LinearOpMode {
     Orientation heading;
     float currentHeading;
     float myHeading = 0f;
-    float targetHeading;
+    float targetHeading = (float)Math.toRadians(180);
     double varDouble;
     @Override
     public void runOpMode() {
@@ -37,8 +38,8 @@ public class LateralDistanceTuner extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
 
-
-
+            updateTelemetryReadings();
+/*
             for(int i = 0; i < 10; i++) {
 
                 while (myHeading < targetHeading) {
@@ -50,6 +51,10 @@ public class LateralDistanceTuner extends LinearOpMode {
                 drive.setMotorPowers(0, 0, 0, 0);
                 sleep(500);
             }
+
+
+ */
+            updateTelemetryReadings();
 
         }
 

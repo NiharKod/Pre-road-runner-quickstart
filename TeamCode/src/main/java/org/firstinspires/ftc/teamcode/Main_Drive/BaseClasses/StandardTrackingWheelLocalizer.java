@@ -34,7 +34,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
     public static double LATERAL_DISTANCE = (422 / 25.4); // in; distance between the left and right wheels //how much it turns
-    public static double FORWARD_OFFSET = (153 / 25.4); // in; offset of the lateral wheel //
+    public static double FORWARD_OFFSET = -1 * (153 / 25.4); // in; offset of the lateral wheel //
 
     private DcMotor leftEncoder, rightEncoder, frontEncoder;
     private ExpansionHubEx hub;
@@ -51,11 +51,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
                 new Pose2d(FORWARD_OFFSET, 0, Math.toRadians(90)) // front
         ));
 
-//        leftEncoder = hardwareMap.dcMotor.get("leftEncoder");
-//        rightEncoder = hardwareMap.dcMotor.get("rightEncoder");
-//        frontEncoder = hardwareMap.dcMotor.get("frontEncoder");
 
-        hub = hardwareMap.get(ExpansionHubEx.class, "odoHub");
+        hub = hardwareMap.get(ExpansionHubEx.class, "OdoHub");
 
     }
 
@@ -68,8 +65,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public List<Double> getWheelPositions() {
         RevBulkData revBulkData = hub.getBulkInputData();
         return Arrays.asList(
-                encoderTicksToInches( revBulkData.getMotorCurrentPosition(LEFT_TELEMETRY_PORT)),
-                encoderTicksToInches( revBulkData.getMotorCurrentPosition(RIGHT_TELEMETRY_PORT)),
+                encoderTicksToInches(-revBulkData.getMotorCurrentPosition(LEFT_TELEMETRY_PORT)),
+                encoderTicksToInches(revBulkData.getMotorCurrentPosition(RIGHT_TELEMETRY_PORT)),
                 encoderTicksToInches(-revBulkData.getMotorCurrentPosition(FRONT_TELEMETRY_PORT))
         );
     }

@@ -37,7 +37,6 @@ public class EarlyTeleOp extends OpMode {
         telemetry.addData("Heading", poseEstimate.getHeading());
         telemetry.update();
 
-        //field centric arcade
-      //  robot.drivetrain.setPowerFieldCentric(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, heading);
+
     }
 }

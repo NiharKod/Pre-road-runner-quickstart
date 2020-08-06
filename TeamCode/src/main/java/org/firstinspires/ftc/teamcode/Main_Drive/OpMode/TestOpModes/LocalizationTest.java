@@ -64,7 +64,7 @@ public class LocalizationTest extends LinearOpMode {
             packet.put("x", estimate.getX());
             packet.put("y", estimate.getY());
             packet.put("heading", Math.toDegrees(estimate.getHeading()));
-            packet.put("imu", Math.toDegrees(drive.getRawExternalHeading()));
+            packet.put("imu", Math.toDegrees(angleWrap(drive.getRawExternalHeading())));
 
             Canvas fieldOverlay = packet.fieldOverlay();
             fieldOverlay.setStroke("#F44336");
@@ -81,5 +81,8 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.update();
         }
+    }
+    public double angleWrap(double angle){
+        return (angle + (2 * Math.PI)) % (2 * Math.PI);
     }
 }
