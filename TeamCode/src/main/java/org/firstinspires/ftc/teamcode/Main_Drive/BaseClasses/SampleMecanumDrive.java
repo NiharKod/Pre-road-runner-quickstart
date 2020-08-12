@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 
 import org.firstinspires.ftc.teamcode.Util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.Util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.Util.Vector3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,8 +54,8 @@ import static org.firstinspires.ftc.teamcode.Main_Drive.BaseClasses.DriveConstan
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(9, 0, 0.3);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(14, 0, .9);
 
 
     public enum Mode {
@@ -74,7 +75,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private DriveConstraints constraints;
     private TrajectoryFollower follower;
-    public ThreeTrackingWheelLocalizer myLocalizer;
+    public StandardTrackingWheelLocalizer myLocalizer;
 
     private List<Pose2d> poseHistory;
 
@@ -146,8 +147,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-        myLocalizer = new StandardTrackingWheelLocalizer(hardwareMap);
-        setLocalizer(myLocalizer);
+        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
+
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -275,7 +276,7 @@ public class SampleMecanumDrive extends MecanumDrive {
             }
         }
 
-       // dashboard.sendTelemetryPacket(packet);
+        dashboard.sendTelemetryPacket(packet);
     }
 
     public void waitForIdle() {
@@ -343,4 +344,39 @@ public class SampleMecanumDrive extends MecanumDrive {
     public double getRawExternalHeading() {
         return imu.getAngularOrientation().firstAngle;
     }
+
+
+    //TODO: custom methods for go to point;
+
+    public void setPower(double x, double y, double rot){
+        double FrontLeftVal = y - x + rot;
+        double FrontRightVal = y + x - rot;
+        double BackLeftVal = y + x + rot;
+        double BackRightVal = y - x - rot;
+
+        double[] power = {FrontLeftVal, FrontRightVal, BackLeftVal, BackRightVal};
+        Arrays.sort(power);
+
+        if(power[3] > 1 ) {
+            FrontLeftVal /= power[3];
+            FrontRightVal /= power[3];
+            BackLeftVal /= power[3];
+            BackRightVal /= power[3];
+        }
+
+        leftFront.setPower(FrontLeftVal);
+        rightFront.setPower(FrontRightVal);
+        leftRear.setPower(BackLeftVal);
+        rightRear.setPower(BackLeftVal);
+    }
+    public void setPowerCentric(double x, double y, double rot, double heading){
+        Vector3 power = new Vector3(x,y);
+        power.rotate(heading);
+        x = power.x;
+        y = power.y;
+
+        setPower(x,y,rot);
+
+    }
+
 }

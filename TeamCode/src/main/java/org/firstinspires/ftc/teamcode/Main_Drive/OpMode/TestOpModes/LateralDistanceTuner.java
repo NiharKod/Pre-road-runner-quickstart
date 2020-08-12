@@ -63,7 +63,7 @@ public class LateralDistanceTuner extends LinearOpMode {
         telemetry.addData("Wheel Positions",localizer.getWheelPositions());
         left = localizer.getWheelPositions().get(0);
         right = localizer.getWheelPositions().get(1);
-        lateralDistance = (right + left) / 11 * Math.PI;
+        lateralDistance = (right + left) / 5 * Math.PI;
         telemetry.addData(" Approx : Lateral Distance", lateralDistance);
         telemetry.update();
     }

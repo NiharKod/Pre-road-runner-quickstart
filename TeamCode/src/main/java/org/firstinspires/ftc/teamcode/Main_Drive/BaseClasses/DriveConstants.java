@@ -23,7 +23,7 @@ public class DriveConstants {
      */
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
-    private static final double MAX_VELO =  (312 / 60) * (1.14) * ((100 / 25.4) / 2) * (2 * Math.PI);;
+    private static final double MAX_VELO =  (312 / 60) * (1.14) * ((100 / 25.4) / 2) * (2 * Math.PI);
     private static final double PREFFERED_VELO = MAX_VELO * 0.8;
 
     /*
@@ -51,9 +51,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.01658/ rpmToVelocity(MAX_RPM);
-    public static double kA = 0.002;
-    public static double kStatic = 0.009972;
+    public static double kV = 0.008;
+    public static double kA = 0;
+    public static double kStatic = 0.09944;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
