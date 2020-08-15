@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Util.Vector3;
 
@@ -13,6 +14,8 @@ public class SimpleDrivetrain {
     public DcMotor FR = null;
     public DcMotor BL = null;
     public DcMotor BR = null;
+    public Servo Arm = null;
+    public Servo Claw = null;
     public HardwareMap hw = null;
     public SimpleDrivetrain(HardwareMap hardwareMap){ this.hw = hardwareMap;}
 
@@ -22,6 +25,8 @@ public class SimpleDrivetrain {
         FR = hw.get(DcMotorEx.class, "FR");
         BL = hw.get(DcMotorEx.class, "BL");
         BR = hw.get(DcMotorEx.class, "BR");
+        Arm = hw.get(Servo.class, "Arm");
+        Claw = hw.get(Servo.class, "Claw");
 
         FL.setDirection(DcMotorSimple.Direction.REVERSE);
         BL.setDirection(DcMotorSimple.Direction.REVERSE);

@@ -24,7 +24,7 @@ public class DriveConstants {
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
     private static final double MAX_VELO =  (312 / 60) * (1.14) * ((100 / 25.4) / 2) * (2 * Math.PI);
-    private static final double PREFFERED_VELO = MAX_VELO * 0.8;
+    private static final double PREFFERED_VELO = MAX_VELO * .99;
 
     /*
      * Set the first flag appropriately. If using the built-in motor velocity PID, update
